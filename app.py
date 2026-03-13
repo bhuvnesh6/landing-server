@@ -5,6 +5,8 @@ app = Flask(__name__)
 
 LANDING_FOLDER = "landing_pages"
 
+os.makedirs(LANDING_FOLDER, exist_ok=True)
+
 # dashboard
 @app.route("/")
 def dashboard():
