@@ -1,23 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Landing Page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upload Landing Page</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#14342B; --pine-2:#1E4A3C; --parchment:#F6F3EC; --card:#FFFFFF;
+    --ink:#1D2521; --muted:#6B7B72; --brass:#B0894F; --line:#E4DFD3;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    background:var(--parchment); color:var(--ink); min-height:100vh;
+    display:flex; align-items:center; justify-content:center; padding:20px;
+  }
+  .wrap{width:100%; max-width:460px}
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:16px;
+    padding:28px; box-shadow:0 1px 2px rgba(20,52,43,.06),0 8px 24px rgba(20,52,43,.06);
+  }
+  h2{font-family:'Fraunces',Georgia,serif; font-weight:600; font-size:22px; margin-bottom:6px}
+  p.sub{color:var(--muted); font-size:14px; margin-bottom:22px}
+  .dropzone{
+    border:2px dashed var(--line); border-radius:12px; padding:28px 16px; text-align:center;
+    cursor:pointer; transition:border-color .15s ease, background .15s ease; margin-bottom:16px;
+  }
+  .dropzone.drag{border-color:var(--brass); background:#FBF6E9}
+  .dropzone svg{stroke:var(--muted); margin-bottom:8px}
+  .dropzone .fname{font-weight:600; color:var(--pine); margin-top:6px; word-break:break-all}
+  input[type="file"]{display:none}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:7px; width:100%;
+    padding:12px 16px; border-radius:10px; font-size:15px; font-weight:600; font-family:inherit;
+    cursor:pointer; border:1px solid transparent; background:var(--brass); color:#fff;
+  }
+  .btn:hover{background:#9c7942}
+  .btn:disabled{background:#C9BBA3; cursor:not-allowed}
+  .back{
+    display:block; text-align:center; margin-top:16px; font-size:14px; color:var(--pine-2, #1E4A3C);
+    text-decoration:none;
+  }
+  .back:hover{text-decoration:underline}
+  {% if not mongo_ok %}
+  .banner{
+    background:#FBF6E9; border:1px solid #EAD9AE; color:#6B5320; border-radius:10px;
+    padding:10px 14px; font-size:12.5px; margin-bottom:18px;
+  }
+  {% endif %}
+</style>
 </head>
 <body>
-   <h2>Upload Landing Page</h2>
+<div class="wrap">
+  <div class="card">
+    <h2>Upload landing page</h2>
+    <p class="sub">Select an .html file to publish it as a new landing page.</p>
 
-<form method="POST" enctype="multipart/form-data">
+    {% if not mongo_ok %}
+    <div class="banner"><b>Note:</b> MongoDB isn't connected — the file will still be saved to disk, but won't be backed up to the database.</div>
+    {% endif %}
 
-<input type="file" name="file" accept=".html">
+    <form method="POST" enctype="multipart/form-data" id="uploadForm">
+      <label class="dropzone" id="dropzone" for="fileInput">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
+        <div>Drag &amp; drop your .html file here, or click to browse</div>
+        <div class="fname" id="fname"></div>
+      </label>
+      <input id="fileInput" type="file" name="file" accept=".html" required>
+      <button type="submit" class="btn" id="submitBtn">Upload</button>
+    </form>
 
-<button type="submit">Upload</button>
+    <a class="back" href="/">← Back to dashboard</a>
+  </div>
+</div>
 
-</form>
+<script>
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+const fname = document.getElementById('fname');
 
-<br>
+fileInput.addEventListener('change', () => {
+  fname.textContent = fileInput.files.length ? fileInput.files[0].name : '';
+});
 
-<a href="/">Back to Dashboard</a> 
+['dragenter','dragover'].forEach(evt =>
+  dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.add('drag'); })
+);
+['dragleave','drop'].forEach(evt =>
+  dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.remove('drag'); })
+);
+dropzone.addEventListener('drop', e => {
+  if (e.dataTransfer.files.length) {
+    fileInput.files = e.dataTransfer.files;
+    fname.textContent = e.dataTransfer.files[0].name;
+  }
+});
+
+document.getElementById('uploadForm').addEventListener('submit', () => {
+  document.getElementById('submitBtn').disabled = true;
+  document.getElementById('submitBtn').textContent = 'Uploading…';
+});
+</script>
 </body>
 </html>

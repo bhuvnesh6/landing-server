@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nisha Homes — Landing Page Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#14342B; --pine-2:#1E4A3C; --parchment:#F6F3EC; --card:#FFFFFF;
+    --ink:#1D2521; --muted:#6B7B72; --brass:#B0894F; --line:#E4DFD3; --danger:#B23A48;
+    --shadow:0 1px 2px rgba(20,52,43,.06),0 8px 24px rgba(20,52,43,.06);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    background:var(--parchment); color:var(--ink); line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* Header */
+  header{
+    background:var(--pine); color:#fff; padding:20px 20px 22px;
+    position:sticky; top:0; z-index:20;
+  }
+  .head-inner{max-width:1080px; margin:0 auto; display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap}
+  .brand{display:flex; align-items:baseline; gap:12px}
+  .brand h1{font-family:'Fraunces',Georgia,serif; font-weight:600; font-size:24px; letter-spacing:.2px}
+  .brand .sub{font-size:12px; color:#B9CFC5; letter-spacing:.14em; text-transform:uppercase; font-weight:600}
+  .count{font-size:13px; color:#B9CFC5}
+  .count b{color:#fff; font-weight:600}
+  /* Toolbar */
+  .toolbar{max-width:1080px; margin:18px auto 0; padding:0 20px; display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+  .search{flex:1; min-width:180px; position:relative}
+  .search input{
+    width:100%; padding:11px 14px 11px 38px; border:1px solid var(--line); border-radius:10px;
+    background:#fff; font-size:15px; font-family:inherit; color:var(--ink);
+  }
+  .search input:focus{outline:2px solid var(--pine-2); outline-offset:1px; border-color:transparent}
+  .search svg{position:absolute; left:12px; top:50%; transform:translateY(-50%); width:16px; height:16px; stroke:var(--muted)}
+  select.filter{
+    padding:11px 14px; border:1px solid var(--line); border-radius:10px; background:#fff;
+    font-size:15px; font-family:inherit; color:var(--ink); cursor:pointer;
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:7px; padding:11px 16px; border-radius:10px;
+    font-size:15px; font-weight:600; font-family:inherit; cursor:pointer; border:1px solid transparent;
+    transition:transform .05s ease, background .15s ease;
+  }
+  .btn:active{transform:translateY(1px)}
+  .btn-primary{background:var(--brass); color:#fff}
+  .btn-primary:hover{background:#9c7942}
+  .btn-ghost{background:#fff; border-color:var(--line); color:var(--ink)}
+  .btn-ghost:hover{background:#faf8f3}
+  /* Banner */
+  .banner{
+    max-width:1080px; margin:14px auto 0; padding:0 20px;
+  }
+  .banner-inner{
+    background:#FBF6E9; border:1px solid #EAD9AE; color:#6B5320; border-radius:10px;
+    padding:10px 14px; font-size:13px; display:flex; gap:8px; align-items:flex-start;
+  }
+  .banner-inner b{font-weight:600}
+  /* Grid */
+  main{max-width:1080px; margin:20px auto 60px; padding:0 20px}
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px}
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px;
+    box-shadow:var(--shadow); display:flex; flex-direction:column; gap:10px;
+  }
+  .card-top{display:flex; align-items:center; justify-content:space-between; gap:8px}
+  .badge{
+    font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+    padding:4px 9px; border-radius:99px; color:#fff; white-space:nowrap;
+  }
+  .card h3{font-family:'Fraunces',Georgia,serif; font-weight:600; font-size:18px; line-height:1.25}
+  .url-row{display:flex; align-items:center; gap:6px; font-size:13px; color:var(--muted); word-break:break-all}
+  .url-row a{color:var(--pine-2); text-decoration:none}
+  .url-row a:hover{text-decoration:underline}
+  .note{font-size:13.5px; color:#4A574F}
+  .card-foot{display:flex; gap:6px; margin-top:4px; padding-top:12px; border-top:1px solid var(--line); flex-wrap:wrap}
+  .chip{
+    display:inline-flex; align-items:center; gap:5px; padding:7px 11px; border-radius:8px;
+    font-size:13px; font-weight:600; cursor:pointer; border:1px solid var(--line); background:#fff; color:var(--ink);
+  }
+  .chip:hover{background:#faf8f3}
+  .chip svg{width:14px; height:14px}
+  .chip.open{background:var(--pine); color:#fff; border-color:var(--pine)}
+  .chip.open:hover{background:var(--pine-2)}
+  .chip.del{color:var(--danger); border-color:#EAD1D4}
+  .chip.del:hover{background:#FBEEF0}
+  .chip.added{color:var(--muted); border:none; cursor:default; margin-left:auto; font-weight:500}
+  /* Empty */
+  .empty{text-align:center; padding:70px 20px; color:var(--muted)}
+  .empty h3{font-family:'Fraunces',serif; color:var(--ink); font-size:20px; margin-bottom:6px; font-weight:600}
+  /* Modal */
+  .overlay{
+    position:fixed; inset:0; background:rgba(20,52,43,.42); display:none; align-items:center;
+    justify-content:center; padding:16px; z-index:50;
+  }
+  .overlay.show{display:flex}
+  .modal{background:#fff; border-radius:16px; width:100%; max-width:440px; padding:24px; box-shadow:0 20px 60px rgba(0,0,0,.25)}
+  .modal h2{font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin-bottom:16px}
+  .field{margin-bottom:14px}
+  .field label{display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:#3A463F}
+  .field input, .field select, .field textarea{
+    width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:9px; font-size:15px;
+    font-family:inherit; color:var(--ink); background:#fff;
+  }
+  .field textarea{resize:vertical; min-height:56px}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--pine-2); outline-offset:1px; border-color:transparent}
+  .modal-foot{display:flex; gap:10px; justify-content:flex-end; margin-top:20px}
+  .toast{
+    position:fixed; bottom:22px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--pine); color:#fff; padding:11px 20px; border-radius:10px; font-size:14px;
+    font-weight:500; opacity:0; transition:all .25s ease; z-index:60; pointer-events:none;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+  @media(max-width:520px){
+    .brand h1{font-size:20px}
+    .head-inner{align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="head-inner">
+    <div class="brand">
+      <h1>Nisha Homes</h1>
+      <span class="sub">Landing Pages</span>
+    </div>
+    <div class="count"><b id="countNum">0</b> pages</div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    <input id="search" type="text" placeholder="Search by name, property or link…">
+  </div>
+  <select class="filter" id="filter">
+    <option value="">All properties</option>
+  </select>
+  <button class="btn btn-primary" onclick="openModal()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+    Add landing page
+  </button>
+</div>
+
+<div class="banner" id="banner" style="display:none">
+  <div class="banner-inner">
+    <span>ℹ️</span>
+    <div><b>Preview mode.</b> Changes are not being saved yet. Once the server's MongoDB connection is available, everything you add here saves permanently and your whole team sees the same list.</div>
+  </div>
+</div>
+
+<main>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" style="display:none">
+    <h3>No landing pages yet</h3>
+    <p>Tap “Add landing page”, paste your link, and give it a name so you know which property it belongs to.</p>
+  </div>
+</main>
+
+<!-- Add / Edit modal -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <h2 id="modalTitle">Add landing page</h2>
+    <div class="field">
+      <label for="f-name">Name / label</label>
+      <input id="f-name" type="text" placeholder="e.g. Hazelwood — Chail 1BHK">
+    </div>
+    <div class="field">
+      <label for="f-url">Link (URL)</label>
+      <input id="f-url" type="url" placeholder="https://project.nishahomes.com/hazelwood">
+    </div>
+    <div class="field">
+      <label for="f-cat">Property</label>
+      <select id="f-cat">
+        <option>Hazelwood</option>
+        <option>Nestling Woods</option>
+        <option>Vasant Kunj</option>
+        <option>Sakshi Surbhi</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="f-note">Note (optional)</label>
+      <textarea id="f-note" placeholder="e.g. For Facebook campaign — investor audience"></textarea>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="savePage()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- Config ---------- */
+/* Backed by Flask routes /links/load and /links/save (MongoDB), instead of load.php/save.php */
+const API = { load: '/links/load', save: '/links/save' };
+const CAT_COLORS = {
+  'Hazelwood':'#2F6F4E', 'Nestling Woods':'#3B7A99', 'Vasant Kunj':'#8A5A2B',
+  'Sakshi Surbhi':'#7A4F9E', 'Other':'#6B7B72'
+};
+/* Example rows so the tool is useful on day one — edit or delete these freely */
+const SEED = [
+  { id:'s1', name:'Hazelwood — Chail 1BHK', category:'Hazelwood', url:'https://project.nishahomes.com/hazelwood', note:'Example — replace with your real link', added:Date.now()-500000 },
+  { id:'s2', name:'Nestling Woods — Kasauli Retreat', category:'Nestling Woods', url:'https://project.nishahomes.com/nestling-woods', note:'Example — replace with your real link', added:Date.now()-400000 },
+  { id:'s3', name:'Vasant Kunj 3BHK — DDA HIG', category:'Vasant Kunj', url:'https://project.nishahomes.com/vasant-kunj', note:'Example — replace with your real link', added:Date.now()-300000 },
+];
+
+let pages = [];
+let backendOK = false;
+let editingId = null;
+
+/* ---------- Load ---------- */
+async function loadPages(){
+  try{
+    const res = await fetch(API.load, {cache:'no-store'});
+    if(!res.ok) throw new Error('no backend');
+    const data = await res.json();
+    if(Array.isArray(data) && data.length > 0){
+      pages = data;
+      backendOK = true;
+    } else if(Array.isArray(data) && data.length === 0){
+      // Backend reachable but empty (fresh MongoDB) — still considered live
+      pages = [];
+      backendOK = true;
+    } else {
+      throw new Error('unexpected response');
+    }
+  }catch(e){
+    pages = SEED.slice();
+    backendOK = false;
+    document.getElementById('banner').style.display = 'block';
+  }
+  render();
+}
+
+/* ---------- Persist ---------- */
+async function persist(){
+  if(!backendOK) return; // preview mode: keep in memory only
+  try{
+    await fetch(API.save, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(pages)
+    });
+  }catch(e){
+    toast('Could not save to server');
+  }
+}
+
+/* ---------- Render ---------- */
+function render(){
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  const cat = document.getElementById('filter').value;
+  buildFilter();
+
+  let list = pages.slice().sort((a,b)=> (b.added||0)-(a.added||0));
+  if(cat) list = list.filter(p=>p.category===cat);
+  if(q) list = list.filter(p =>
+    (p.name||'').toLowerCase().includes(q) ||
+    (p.url||'').toLowerCase().includes(q) ||
+    (p.category||'').toLowerCase().includes(q) ||
+    (p.note||'').toLowerCase().includes(q)
+  );
+
+  document.getElementById('countNum').textContent = pages.length;
+  const grid = document.getElementById('grid');
+  const empty = document.getElementById('empty');
+
+  if(list.length===0){
+    grid.innerHTML='';
+    empty.style.display='block';
+    empty.querySelector('h3').textContent = pages.length===0 ? 'No landing pages yet' : 'No matches';
+    return;
+  }
+  empty.style.display='none';
+  grid.innerHTML = list.map(p=>{
+    const color = CAT_COLORS[p.category] || CAT_COLORS['Other'];
+    const d = p.added ? new Date(p.added) : null;
+    const dateStr = d ? d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) : '';
+    return `
+    <div class="card">
+      <div class="card-top">
+        <span class="badge" style="background:${color}">${esc(p.category||'Other')}</span>
+      </div>
+      <h3>${esc(p.name||'Untitled')}</h3>
+      <div class="url-row">
+        <a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.url||'')}</a>
+      </div>
+      ${p.note ? `<div class="note">${esc(p.note)}</div>` : ''}
+      <div class="card-foot">
+        <span class="chip open" onclick="openLink('${p.id}')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6M10 14 21 3"/></svg>
+          Open
+        </span>
+        <span class="chip" onclick="copyLink('${p.id}')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </span>
+        <span class="chip" onclick="editPage('${p.id}')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+          Rename
+        </span>
+        <span class="chip del" onclick="deletePage('${p.id}')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+          Delete
+        </span>
+        <span class="chip added">${dateStr}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function buildFilter(){
+  const sel = document.getElementById('filter');
+  const cur = sel.value;
+  const cats = [...new Set(pages.map(p=>p.category).filter(Boolean))];
+  sel.innerHTML = '<option value="">All properties</option>' +
+    cats.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
+  sel.value = cur;
+}
+
+/* ---------- Actions ---------- */
+function openLink(id){ const p=pages.find(x=>x.id===id); if(p&&p.url) window.open(p.url,'_blank','noopener'); }
+
+async function copyLink(id){
+  const p=pages.find(x=>x.id===id); if(!p) return;
+  try{ await navigator.clipboard.writeText(p.url); toast('Link copied'); }
+  catch(e){
+    const t=document.createElement('textarea'); t.value=p.url; document.body.appendChild(t);
+    t.select(); document.execCommand('copy'); t.remove(); toast('Link copied');
+  }
+}
+
+function openModal(){
+  editingId=null;
+  document.getElementById('modalTitle').textContent='Add landing page';
+  document.getElementById('f-name').value='';
+  document.getElementById('f-url').value='';
+  document.getElementById('f-cat').value='Hazelwood';
+  document.getElementById('f-note').value='';
+  document.getElementById('overlay').classList.add('show');
+  setTimeout(()=>document.getElementById('f-name').focus(),50);
+}
+function editPage(id){
+  const p=pages.find(x=>x.id===id); if(!p) return;
+  editingId=id;
+  document.getElementById('modalTitle').textContent='Edit landing page';
+  document.getElementById('f-name').value=p.name||'';
+  document.getElementById('f-url').value=p.url||'';
+  document.getElementById('f-cat').value=p.category||'Other';
+  document.getElementById('f-note').value=p.note||'';
+  document.getElementById('overlay').classList.add('show');
+}
+function closeModal(){ document.getElementById('overlay').classList.remove('show'); }
+
+function savePage(){
+  const name=document.getElementById('f-name').value.trim();
+  let url=document.getElementById('f-url').value.trim();
+  const category=document.getElementById('f-cat').value;
+  const note=document.getElementById('f-note').value.trim();
+  if(!name){ toast('Please add a name'); return; }
+  if(!url){ toast('Please add a link'); return; }
+  if(!/^https?:\/\//i.test(url)) url='https://'+url;
+
+  if(editingId){
+    const p=pages.find(x=>x.id===editingId);
+    if(p){ p.name=name; p.url=url; p.category=category; p.note=note; }
+    toast('Saved');
+  }else{
+    pages.push({ id:'p'+Date.now(), name, url, category, note, added:Date.now() });
+    toast('Landing page added');
+  }
+  closeModal();
+  persist();
+  render();
+}
+
+function deletePage(id){
+  const p=pages.find(x=>x.id===id); if(!p) return;
+  if(!confirm(`Delete “${p.name}”? This cannot be undone.`)) return;
+  pages=pages.filter(x=>x.id!==id);
+  persist();
+  render();
+  toast('Deleted');
+}
+
+/* ---------- Helpers ---------- */
+function esc(s){ return (s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+let toastTimer;
+function toast(msg){
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),1800);
+}
+
+document.getElementById('search').addEventListener('input', render);
+document.getElementById('filter').addEventListener('change', render);
+document.getElementById('overlay').addEventListener('click', e=>{ if(e.target.id==='overlay') closeModal(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+
+loadPages();
+</script>
+</body>
+</html>

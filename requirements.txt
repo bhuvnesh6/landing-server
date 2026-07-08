@@ -1,2 +1,4 @@
 flask
 gunicorn
+python-dotenv>=1.0
+pymongo>=4.6
